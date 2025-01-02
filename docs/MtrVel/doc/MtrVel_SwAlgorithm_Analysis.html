@@ -1,0 +1,884 @@
+---
+layout: default
+title: MtrVel_SwAlgorithm_Analysis
+nav_order: 5
+parent: Motor Velocity
+---
+{% raw %}
+<!DOCTYPE html>
+
+<html>
+<head>
+	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.3.7.2 (Linux)"/>
+	<meta name="author" content="Jeremy Warmbier"/>
+	<meta name="created" content="2012-12-13T18:50:18"/>
+	<meta name="changedby" content="Jeremy Warmbier"/>
+	<meta name="changed" content="2013-02-14T21:26:22"/>
+	<meta name="AppVersion" content="12.0000"/>
+	<meta name="Company" content="Nexteer Automotive"/>
+	
+	<style type="text/css">
+		body,div,table,thead,tbody,tfoot,tr,th,td,p { font-family:"Calibri"; font-size:x-small }
+		a.comment-indicator:hover + comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em;  } 
+		a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em;  } 
+		comment { display:none;  } 
+	</style>
+	
+</head>
+
+<body>
+<hr>
+	<p><center>
+		<h1>Overview</h1>
+		<A HREF="#table0">Overview</A><br>
+		<A HREF="#table1">Fixed Point Model</A><br>
+		
+	</center></p>
+<hr>
+<A NAME="table0"><h1>Sheet 1: <em>Overview</em></h1></A>
+<table cellspacing="0" border="0">
+	<colgroup span="10" width="64"></colgroup>
+	<tr>
+		<td colspan=10 rowspan=39 height="780" align="left" valign=bottom><font color="#000000"><br><img src="MtrVel_SwAlgorithm_Analysis_html_916fdccd0a1d3812.png" width=581 height=771 hspace=35 vspace=23>
+		</font></td>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+</table>
+<!-- ************************************************************************** -->
+<hr>
+<A NAME="table1"><h1>Sheet 2: <em>Fixed Point Model</em></h1></A>
+<table cellspacing="0" border="0">
+	<colgroup span="2" width="64"></colgroup>
+	<colgroup width="101"></colgroup>
+	<colgroup width="97"></colgroup>
+	<colgroup width="63"></colgroup>
+	<colgroup width="65"></colgroup>
+	<colgroup span="2" width="64"></colgroup>
+	<colgroup width="37"></colgroup>
+	<colgroup width="44"></colgroup>
+	<colgroup width="67"></colgroup>
+	<colgroup width="117"></colgroup>
+	<colgroup width="105"></colgroup>
+	<colgroup width="109"></colgroup>
+	<colgroup width="64"></colgroup>
+	<colgroup width="178"></colgroup>
+	<colgroup width="91"></colgroup>
+	<colgroup span="2" width="89"></colgroup>
+	<colgroup width="87"></colgroup>
+	<tr>
+		<td height="23" align="left" valign=bottom><font color="#000000">Time[z-8] (us)</font></td>
+		<td align="left" valign=bottom><font color="#000000">Time (us)</font></td>
+		<td align="left" valign=bottom bgcolor="#E6E0EC"><font color="#000000">Cos [z-8] (p13)</font></td>
+		<td align="left" valign=bottom bgcolor="#E6E0EC"><font color="#000000">Sin[z-8] (p13)</font></td>
+		<td align="left" valign=bottom bgcolor="#C6D9F1"><font color="#000000">Cos (p13)</font></td>
+		<td align="left" valign=bottom bgcolor="#C6D9F1"><font color="#000000">Sin (p13)</font></td>
+		<td align="left" valign=bottom bgcolor="#92D050"><font color="#000000">Time[z-8] (us)</font></td>
+		<td align="left" valign=bottom bgcolor="#92D050"><font color="#000000">Time (us)</font></td>
+		<td align="left" valign=bottom><font color="#000000">∆t</font></td>
+		<td align="left" valign=bottom><font color="#000000">2t</font></td>
+		<td align="left" valign=bottom><font color="#000000">2t2</font></td>
+		<td align="left" valign=bottom><font color="#000000">∆ Theta (p13)</font></td>
+		<td align="left" valign=bottom><font color="#000000">Velocity (p24)</font></td>
+		<td align="left" valign=bottom><font color="#000000">2t*Velocity (p24)</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">t0 (uS)</font></td>
+		<td align="right" valign=bottom sdval="20000" sdnum="1033;"><font color="#000000">20000</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="right" valign=bottom sdval="20000" sdnum="1033;"><font color="#000000">20000</font></td>
+		<td align="right" valign=bottom sdval="21000" sdnum="1033;"><font color="#000000">21000</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="8192" sdnum="1033;"><font color="#000000">8192</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="0" sdnum="1033;"><font color="#000000">0</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="8181" sdnum="1033;"><font color="#000000">8181</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="413" sdnum="1033;"><font color="#000000">413</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="0" sdnum="1033;"><font color="#000000">0</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1000000" sdnum="1033;"><font color="#000000">1000000</font></td>
+		<td align="right" valign=bottom sdval="413" sdnum="1033;"><font color="#000000">413</font></td>
+		<td align="right" valign=bottom sdval="845" sdnum="1033;"><font color="#000000">845</font></td>
+		<td align="right" valign=bottom sdval="845000" sdnum="1033;"><font color="#000000">845000</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">sample inc (uS)</font></td>
+		<td align="right" valign=bottom sdval="63" sdnum="1033;"><font color="#000000">63</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="right" valign=bottom sdval="20063" sdnum="1033;"><font color="#000000">20063</font></td>
+		<td align="right" valign=bottom sdval="21063" sdnum="1033;"><font color="#000000">21063</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="8191" sdnum="1033;"><font color="#000000">8191</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="25" sdnum="1033;"><font color="#000000">25</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="8180" sdnum="1033;"><font color="#000000">8180</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="439" sdnum="1033;"><font color="#000000">439</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="63" sdnum="1033;"><font color="#000000">63</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="1063" sdnum="1033;"><font color="#000000">1063</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1126" sdnum="1033;"><font color="#000000">1126</font></td>
+		<td align="right" valign=bottom sdval="1267876" sdnum="1033;"><font color="#000000">1267876</font></td>
+		<td align="right" valign=bottom sdval="414" sdnum="1033;"><font color="#000000">414</font></td>
+		<td align="right" valign=bottom sdval="847" sdnum="1033;"><font color="#000000">847</font></td>
+		<td align="right" valign=bottom sdval="953722" sdnum="1033;"><font color="#000000">953722</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">loop seperation (uS)</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="right" valign=bottom sdval="20126" sdnum="1033;"><font color="#000000">20126</font></td>
+		<td align="right" valign=bottom sdval="21126" sdnum="1033;"><font color="#000000">21126</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="8191" sdnum="1033;"><font color="#000000">8191</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="51" sdnum="1033;"><font color="#000000">51</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="8178" sdnum="1033;"><font color="#000000">8178</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="466" sdnum="1033;"><font color="#000000">466</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="126" sdnum="1033;"><font color="#000000">126</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="1126" sdnum="1033;"><font color="#000000">1126</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1252" sdnum="1033;"><font color="#000000">1252</font></td>
+		<td align="right" valign=bottom sdval="1567504" sdnum="1033;"><font color="#000000">1567504</font></td>
+		<td align="right" valign=bottom sdval="415" sdnum="1033;"><font color="#000000">415</font></td>
+		<td align="right" valign=bottom sdval="849" sdnum="1033;"><font color="#000000">849</font></td>
+		<td align="right" valign=bottom sdval="1062948" sdnum="1033;"><font color="#000000">1062948</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">offset</font></td>
+		<td align="right" valign=bottom sdval="20000" sdnum="1033;"><font color="#000000">20000</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="right" valign=bottom sdval="20189" sdnum="1033;"><font color="#000000">20189</font></td>
+		<td align="right" valign=bottom sdval="21189" sdnum="1033;"><font color="#000000">21189</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="8191" sdnum="1033;"><font color="#000000">8191</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="77" sdnum="1033;"><font color="#000000">77</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="8177" sdnum="1033;"><font color="#000000">8177</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="492" sdnum="1033;"><font color="#000000">492</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="189" sdnum="1033;"><font color="#000000">189</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="1189" sdnum="1033;"><font color="#000000">1189</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1378" sdnum="1033;"><font color="#000000">1378</font></td>
+		<td align="right" valign=bottom sdval="1898884" sdnum="1033;"><font color="#000000">1898884</font></td>
+		<td align="right" valign=bottom sdval="415" sdnum="1033;"><font color="#000000">415</font></td>
+		<td align="right" valign=bottom sdval="849" sdnum="1033;"><font color="#000000">849</font></td>
+		<td align="right" valign=bottom sdval="1169922" sdnum="1033;"><font color="#000000">1169922</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="right" valign=bottom sdval="20252" sdnum="1033;"><font color="#000000">20252</font></td>
+		<td align="right" valign=bottom sdval="21252" sdnum="1033;"><font color="#000000">21252</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="8191" sdnum="1033;"><font color="#000000">8191</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="103" sdnum="1033;"><font color="#000000">103</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="8175" sdnum="1033;"><font color="#000000">8175</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="518" sdnum="1033;"><font color="#000000">518</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="252" sdnum="1033;"><font color="#000000">252</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="1252" sdnum="1033;"><font color="#000000">1252</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1504" sdnum="1033;"><font color="#000000">1504</font></td>
+		<td align="right" valign=bottom sdval="2262016" sdnum="1033;"><font color="#000000">2262016</font></td>
+		<td align="right" valign=bottom sdval="415" sdnum="1033;"><font color="#000000">415</font></td>
+		<td align="right" valign=bottom sdval="849" sdnum="1033;"><font color="#000000">849</font></td>
+		<td align="right" valign=bottom sdval="1276896" sdnum="1033;"><font color="#000000">1276896</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Actual Velocity(rad/s)</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="50" sdnum="1033;"><font color="#000000">50</font></td>
+		<td align="right" valign=bottom sdval="0.00005" sdnum="1033;"><font color="#000000">0.00005</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="23" align="right" valign=bottom sdval="20315" sdnum="1033;"><font color="#000000">20315</font></td>
+		<td align="right" valign=bottom sdval="21315" sdnum="1033;"><font color="#000000">21315</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="8190" sdnum="1033;"><font color="#000000">8190</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="129" sdnum="1033;"><font color="#000000">129</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="8173" sdnum="1033;"><font color="#000000">8173</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="545" sdnum="1033;"><font color="#000000">545</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="315" sdnum="1033;"><font color="#000000">315</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="1315" sdnum="1033;"><font color="#000000">1315</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1630" sdnum="1033;"><font color="#000000">1630</font></td>
+		<td align="right" valign=bottom sdval="2656900" sdnum="1033;"><font color="#000000">2656900</font></td>
+		<td align="right" valign=bottom sdval="416" sdnum="1033;"><font color="#000000">416</font></td>
+		<td align="right" valign=bottom sdval="851" sdnum="1033;"><font color="#000000">851</font></td>
+		<td align="right" valign=bottom sdval="1387130" sdnum="1033;"><font color="#000000">1387130</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Actual Accel(rad/s2)</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="500" sdnum="1033;"><font color="#000000">500</font></td>
+		<td align="right" valign=bottom sdval="0.0000000005" sdnum="1033;"><font color="#000000">5E-10</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="right" valign=bottom sdval="20378" sdnum="1033;"><font color="#000000">20378</font></td>
+		<td align="right" valign=bottom sdval="21378" sdnum="1033;"><font color="#000000">21378</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="8190" sdnum="1033;"><font color="#000000">8190</font></td>
+		<td align="right" valign=bottom bgcolor="#E6E0EC" sdval="155" sdnum="1033;"><font color="#000000">155</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="8172" sdnum="1033;"><font color="#000000">8172</font></td>
+		<td align="right" valign=bottom bgcolor="#C6D9F1" sdval="571" sdnum="1033;"><font color="#000000">571</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="378" sdnum="1033;"><font color="#000000">378</font></td>
+		<td align="right" valign=bottom bgcolor="#92D050" sdval="1378" sdnum="1033;"><font color="#000000">1378</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="right" valign=bottom sdval="1756" sdnum="1033;"><font color="#000000">1756</font></td>
+		<td align="right" valign=bottom sdval="3083536" sdnum="1033;"><font color="#000000">3083536</font></td>
+		<td align="right" valign=bottom sdval="416" sdnum="1033;"><font color="#000000">416</font></td>
+		<td align="right" valign=bottom sdval="851" sdnum="1033;"><font color="#000000">851</font></td>
+		<td align="right" valign=bottom sdval="1494356" sdnum="1033;"><font color="#000000">1494356</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Initial theta</font></td>
+		<td align="right" valign=bottom sdval="0" sdnum="1033;"><font color="#000000">0</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td style="border-bottom: 2px double #000000" height="21" align="right" valign=bottom sdval="20441" sdnum="1033;"><font color="#000000">20441</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom sdval="21441" sdnum="1033;"><font color="#000000">21441</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom bgcolor="#E6E0EC" sdval="8189" sdnum="1033;"><font color="#000000">8189</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom bgcolor="#E6E0EC" sdval="181" sdnum="1033;"><font color="#000000">181</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom bgcolor="#C6D9F1" sdval="8170" sdnum="1033;"><font color="#000000">8170</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom bgcolor="#C6D9F1" sdval="598" sdnum="1033;"><font color="#000000">598</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom bgcolor="#92D050" sdval="441" sdnum="1033;"><font color="#000000">441</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom bgcolor="#92D050" sdval="1441" sdnum="1033;"><font color="#000000">1441</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom sdval="1882" sdnum="1033;"><font color="#000000">1882</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom sdval="3541924" sdnum="1033;"><font color="#000000">3541924</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom sdval="417" sdnum="1033;"><font color="#000000">417</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom sdval="854" sdnum="1033;"><font color="#000000">854</font></td>
+		<td style="border-bottom: 2px double #000000" align="right" valign=bottom sdval="1607228" sdnum="1033;"><font color="#000000">1607228</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">TimeOffset(uS)</font></td>
+		<td align="right" valign=bottom sdval="100" sdnum="1033;"><font color="#000000">100</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="21" align="left" valign=bottom><font color="#000000">raw</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Relative time</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="right" valign=bottom sdval="8000" sdnum="1033;"><font color="#000000">8000</font></td>
+		<td align="right" valign=bottom sdval="11528" sdnum="1033;"><font color="#000000">11528</font></td>
+		<td align="right" valign=bottom sdval="17278640" sdnum="1033;"><font color="#000000">17278640</font></td>
+		<td align="right" valign=bottom sdval="3321" sdnum="1033;"><font color="#000000">3321</font></td>
+		<td align="right" valign=bottom sdval="6795" sdnum="1033;"><font color="#000000">6795</font></td>
+		<td align="right" valign=bottom sdval="9797202" sdnum="1033;"><font color="#000000">9797202</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">B1Num (p24)</font></td>
+		<td align="right" valign=bottom sdval="44856" sdnum="1033;"><font color="#000000">44856</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">B1Num (p35) Limited</font></td>
+		<td align="right" valign=bottom sdval="91865088" sdnum="1033;"><a class="comment-indicator"></a>
+		<comment>Jeremy Warmbier:
+limit the p24 number prior to scaling up to prevent an overflow. Scaling upt to a sm4p35, which means the max on the positive side is 0.625 - 1 count</comment>
+		<font color="#000000">91865088</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">A0</font></td>
+		<td align="right" valign=bottom sdval="0.5240920730306" sdnum="1033;"><font color="#000000">0.5240920730306</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Bden (pm7)</font></td>
+		<td align="right" valign=bottom sdval="41674" sdnum="1033;"><font color="#000000">41674</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">N1P</font></td>
+		<td align="right" valign=bottom sdval="0.09361941664774" sdnum="1033;"><font color="#000000">0.09361941664774</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Slope (p42)</font></td>
+		<td align="right" valign=bottom sdval="2204" sdnum="1033;"><font color="#000000">2204</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">N2P</font></td>
+		<td align="right" valign=bottom sdval="1.488737214789" sdnum="1033;"><font color="#000000">1.488737214789</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">∆ Theta Intercept (p24)</font></td>
+		<td align="right" valign=bottom sdval="849" sdnum="1033;"><font color="#000000">849</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">E1P</font></td>
+		<td align="right" valign=bottom sdval="1.27106431778" sdnum="1033;"><font color="#000000">1.27106431778</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Predicted ∆ Theta (p24)</font></td>
+		<td align="right" valign=bottom sdval="849000" sdnum="1033;"><font color="#000000">849000</font></td>
+		<td align="right" valign=bottom sdval="50.6043434143066" sdnum="1033;"><font color="#000000">50.6043434143066</font></td>
+		<td align="left" valign=bottom><font color="#000000">E2P</font></td>
+		<td align="right" valign=bottom sdval="3.700991517299" sdnum="1033;"><font color="#000000">3.700991517299</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Correction Scaler</font></td>
+		<td align="right" valign=bottom sdval="1.00042724912006" sdnum="1033;0;0.0000"><a class="comment-indicator"></a>
+		<comment>Jeremy Warmbier:
+The correction scaler is computed using the existing FDD algorihtm and not the LabView model attached to the PSR.  The only difference being that time does not need to be factored out of the expression due to being done prior to division by time.</comment>
+		<font color="#000000">1.0004</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Corr. ∆ Theta (float)</font></td>
+		<td align="right" valign=bottom sdval="0.0506259640755018" sdnum="1033;0;0.000000"><font color="#000000">0.050626</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Avg. ∆t</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Motor Velocity (rad/sec)</font></td>
+		<td align="right" valign=bottom bgcolor="#8EB4E3" sdval="50.6259640755018" sdnum="1033;0;0.000"><font color="#000000">50.626</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Motor Accel (rad/s2)</font></td>
+		<td align="right" valign=bottom bgcolor="#8EB4E3" sdval="501.131580676883" sdnum="1033;0;0.000"><font color="#000000">501.132</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom bgcolor="#A6A6A6"><b><font color="#000000">Averaging Motor Velocity Algorithm</font></b></td>
+		<td align="left" valign=bottom bgcolor="#A6A6A6"><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom bgcolor="#A6A6A6"><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom bgcolor="#A6A6A6"><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom bgcolor="#A6A6A6"><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">∆t</font></td>
+		<td align="right" valign=bottom sdval="1000" sdnum="1033;"><font color="#000000">1000</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">A0</font></td>
+		<td align="right" valign=bottom sdval="0.524997832" sdnum="1033;"><font color="#000000">0.524997832</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">∆ sin</font></td>
+		<td align="right" valign=bottom sdval="415" sdnum="1033;"><font color="#000000">415</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">N1P</font></td>
+		<td align="right" valign=bottom sdval="94250.18578" sdnum="1033;"><font color="#000000">94250.18578</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">∆ cos</font></td>
+		<td align="right" valign=bottom sdval="-15" sdnum="1033;"><font color="#000000">-15</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">N2P</font></td>
+		<td align="right" valign=bottom sdval="1484093.006" sdnum="1033;"><font color="#000000">1484093.006</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Cos_Theta1_OS</font></td>
+		<td align="right" valign=bottom sdval="8175" sdnum="1033;"><font color="#000000">8175</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">E1P</font></td>
+		<td align="right" valign=bottom sdval="1270451.499" sdnum="1033;"><font color="#000000">1270451.499</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Sin_Theta1_OS</font></td>
+		<td align="right" valign=bottom sdval="505" sdnum="1033;"><font color="#000000">505</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">E2P</font></td>
+		<td align="right" valign=bottom sdval="3702672.882" sdnum="1033;"><font color="#000000">3702672.882</font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">West</font></td>
+		<td align="right" valign=bottom sdval="50.6844608347687" sdnum="1033;0;0.000"><font color="#000000">50.684</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Correction Scaler</font></td>
+		<td align="right" valign=bottom sdval="1.00042946236421" sdnum="1033;0;0.0000"><font color="#000000">1.0004</font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000">Motor Velocity (rad/sec)</font></td>
+		<td align="right" valign=bottom bgcolor="#FFFF00" sdval="50.7062279031477" sdnum="1033;0;0.000">50.706</td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+</table>
+<!-- ************************************************************************** -->
+</body>
+
+</html>
+
+{% endraw %}
